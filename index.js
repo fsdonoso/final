@@ -1,3 +1,4 @@
+
 firebase.auth().onAuthStateChanged(async function(user) {
   if (user) {
     // Signed in
@@ -14,7 +15,7 @@ firebase.auth().onAuthStateChanged(async function(user) {
       signInOptions: [
         firebase.auth.EmailAuthProvider.PROVIDER_ID
       ],
-      signInSuccessUrl: 'index.html'
+      signInSuccessUrl: 'landing.html'
     }
 
     // Starts FirebaseUI Auth

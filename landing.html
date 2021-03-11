@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Final</title>
+  <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet" type="text/css">
+  <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.7.3/firebase-ui-auth.css" />
+  <style>
+    td {
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="md:flex">
+    <div>
+      <h1 id="usr"></h1>
+      <h3 id="eml"></h3>
+    </div>
+  </div>
+  <div id="logo">LOGO</div>
+  <div class="sign-in-or-sign-out"></div>
+  <br /><br /><br />
+  <div class="flex flex-col">
+    <select name="slExchange" id="slExchange"></select>
+  </div>
+  <br /><br /><br />
+  <div class="flex flex-col">
+    <table class="table-auto" border 1>
+      <thead>
+        <tr>
+          <th>Stock #1 Pick</th>
+          <th>Ticker</th>
+          <th>Exchange</th>
+          <th>Currency</th>
+          <th>Latest Price</th>
+          <th>Latest Price Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <select name="tickername" id="tickername"></select>
+          </td>
+          <td id="ticker"></td>
+          <td id="exchange"></td>
+          <td id="currency"></td>
+          <td id="latestprice"></td>
+          <td id="latestpricedate"></td>
+        </tr>
+      </tbody>
+    </table>
+    <table class="table-auto mt-5" border=1>
+      <thead>
+        <tr>
+          <th>&nbsp;</th>
+          <th>Start Date</th>
+          <th>End Date</th>
+          <th>Avg</th>
+          <th>% Chg</th>
+          <th>Min</th>
+          <th>Max</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><button type="button" id="calc" name="calc"  class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Get</button></td>
+          <td>
+            <input type="date" class="datepicker" id="dtinidate" />
+          </td>
+          <td>
+            <input type="date" class="datepicker" id="dtenddate" />
+          </td>
+          <td id="avg"></td>
+          <td id="perchange"></td>
+          <td id="min"></td>
+          <td id="max"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Put the Firebase config here -->
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/8.2.7/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.2.7/firebase-firestore.js"></script>
+
+  <!-- Firebase Auth -->
+  <script src="https://www.gstatic.com/firebasejs/8.2.7/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/ui/4.7.3/firebase-ui-auth.js"></script>
+
+  <script>
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+      apiKey: "AIzaSyA76pMVJ4mRBDI6WWvwTLvdYeUOsyUfs_o",
+      authDomain: "kiei-451-7a78f.firebaseapp.com",
+      projectId: "kiei-451-7a78f",
+      storageBucket: "kiei-451-7a78f.appspot.com",
+      messagingSenderId: "501165029056",
+      appId: "1:501165029056:web:bc1447b00e3fe441381f25"
+    } // replace
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+  </script>
+  <script src="landing.js"></script>
+</body>
+
+</html>

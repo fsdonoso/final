@@ -16,21 +16,35 @@
 
 <body>
   
-<div class= p-6 bg-grey-200>
+
+<!-- Creates the upper part of the website incl. spacing out Logo, name, and sing-out-button-->
+<div class=" p-6 bg-grey-200">
   <div class="md:flex">
-    <div>
-      <h1 id="usr" class="text-2xl semibold mb-2 lg:mb-0"></h1>
-      <h3 id="eml"> class="text-2xl"</h3>
+    
+    <div class="md:w-1/6">
+        <div id="logo">LOGO</div>
+    </div>
+    
+
+    <div class="md:w-4/6">
+          <h1 id="usr" class="text-2xl semibold mb-2 lg:mb-0"></h1>
+          <h3 id="eml"> class="text-2xl"</h3>
+    </div>
+    
+    <div class="md:w-1/6">
+        <div class="sign-in-or-sign-out"></div>
     </div>
   </div>
-  <div id="logo">LOGO</div>
-  <div class="sign-in-or-sign-out"></div>
-  <br /><br /><br />
-  <div class="flex flex-col">
-    <select name="slExchange" id="slExchange"></select>
-  </div>
-  <br /><br /><br />
-  <div class="flex flex-col">
+  
+
+<!-- Drop down to choose exchange -->
+      <div class="flex flex-col my-10">
+        <select name="slExchange" id="slExchange" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"></select>
+      </div>
+
+  
+<!-- Create overview with according spacing -->
+  <div class="flex flex-col my-10">
     <table class="table-auto" border 1>
       <thead>
         <tr>
@@ -45,7 +59,7 @@
       <tbody>
         <tr>
           <td>
-            <select name="tickername" id="tickername"></select>
+            <select name="tickername" id="tickername" class="bg-blue-400 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"></select>
           </td>
           <td id="ticker"></td>
           <td id="exchange"></td>
@@ -58,7 +72,6 @@
     <table class="table-auto mt-5" border=1>
       <thead>
         <tr>
-          <th>&nbsp;</th>
           <th>Start Date</th>
           <th>End Date</th>
           <th>Avg</th>
@@ -69,12 +82,11 @@
       </thead>
       <tbody>
         <tr>
-          <td><button type="button" id="calc" name="calc"  class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Get</button></td>
           <td>
-            <input type="date" class="datepicker" id="dtinidate" />
+            <input type="date" id="dtinidate" class="datepicker bg-blue-400 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"/>
           </td>
           <td>
-            <input type="date" class="datepicker" id="dtenddate" />
+            <input type="date" id="dtenddate" class="datepicker bg-blue-400 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"/>
           </td>
           <td id="avg"></td>
           <td id="perchange"></td>
@@ -83,9 +95,18 @@
         </tr>
       </tbody>
     </table>
+
+  <!-- Get button -->
+ <div class="md:w-1/3">
+    <button type="button" id="calc" name="calc"  class="my-20 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">Get data</button>
+  </div>
+  
   </div>
 </div>
-  <!-- Put the Firebase config here -->
+  
+
+
+<!-- Put the Firebase config here -->
   <!-- The core Firebase JS SDK is always required and must be listed first -->
   <script src="https://www.gstatic.com/firebasejs/8.2.7/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.2.7/firebase-firestore.js"></script>

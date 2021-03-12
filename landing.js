@@ -17,9 +17,16 @@ firebase.auth().onAuthStateChanged(async function(user) {
         email : user.email
       });
       //Show Current user on screen
-      document.querySelector('#usr').innerHTML = user.displayName;
+      let = loggedinUser = user.displayName
+      
+      document.querySelector('#usr').insertAdjacentHTML('beforeend', `
+      <span class="font-bold text-xl">Welcome back, ${loggedinUser}!</span>
+      `)
+
+      // Show email on screen
       document.querySelector('#eml').innerHTML = user.email;
 
+      
       //Exchanges API Call
       let respExchange  = await fetch(`http://api.marketstack.com/v1/exchanges?access_key=${apiKey}`)
       let jsonExchange  = await respExchange.json()
@@ -45,7 +52,7 @@ firebase.auth().onAuthStateChanged(async function(user) {
     // Sign-out button 
       
       document.querySelector('.sign-in-or-sign-out').innerHTML = `
-      <button class="text-pink-500 underline sign-out">Sign Out</button>`
+      <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Sign Out</button>`
       document.querySelector('.sign-in-or-sign-out').addEventListener('click', function(event) {
       console.log('sign out clicked')
       firebase.auth().signOut()

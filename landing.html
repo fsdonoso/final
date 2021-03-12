@@ -18,7 +18,8 @@
   
 
 <!-- Creates the upper part of the website incl. spacing out Logo, name, and sing-out-button-->
-<div class=" p-6 bg-grey-200">
+<div class="p-6 bg-grey-200">
+  
   <div class="md:flex">
     
     <div class="md:w-1/6">
@@ -37,13 +38,82 @@
   </div>
   
 
-<!-- Drop down to choose exchange -->
-      <div class="flex flex-col my-10">
-        <select name="slExchange" id="slExchange" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"></select>
-      </div>
+<!-- Header + Drop down to choose exchange -->
+  <div class="w-full xl:w-1/3">
+    <p class="text-xl font-semibold mt-20">Choose an exchange</p>
+  </div>
+
+  <div class="flex flex-col mb-20">
+      <select name="slExchange" id="slExchange" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"></select>
+  </div>
 
   
+
+
+
 <!-- Create overview with according spacing -->
+
+
+<!-- <div class="w-full xl:w-1/3">
+  <p class="text-xl font-semibold">Choose Stock parameters</p>
+  <div class="w-full bg-white border rounded-lg p-4">
+ -->
+
+
+    <!-- First row of data -->
+    <!-- <div class="md:flex my-5">
+        
+      <div class="md:w-1/3">
+          <div class="font-bold">Stock #1 Pick</div>
+      </div>
+     </div>
+
+
+    <div class="md:flex my-5">
+      <div class="md:w-1/3">
+        <select name="tickername" id="tickername" class="bg-blue-400 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"></select>
+      </div> 
+    </div> -->
+
+   <!-- Second row of data -->
+
+    <!-- <div class="md:flex my-5">
+      <div class="md:w-1/3">
+          <div class="font-bold">Start Date</div>
+      </div>      
+    </div>
+
+
+    <div class="md:flex my-5">
+      <div class="md:w-1/3">
+        <input type="date" id="dtinidate" class="datepicker bg-blue-400 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"/>
+      </div>   
+    </div>
+
+    <div class="md:flex my-5">
+      <div class="md:w-1/3">
+
+      
+      <div class="md:w-1/3">
+        <div class="font-bold">End Date</div>
+      </div>
+   
+      <div class="md:w-1/3">
+        <input type="date" id="dtenddate" class="datepicker bg-blue-400 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"/>
+      </div>
+    
+    </div>
+
+
+
+  </div>  
+</div>    -->
+
+
+
+
+
+
   <div class="flex flex-col my-10">
     <table class="table-auto" border 1>
       <thead>
@@ -69,6 +139,37 @@
         </tr>
       </tbody>
     </table>
+
+
+<!-- 
+
+<div class="flex flex-col my-10">
+      <table class="table-auto" border 1>
+        <thead>
+          <tr>
+            <th></th>
+            <th>Ticker</th>
+            <th>Exchange</th>
+            <th>Currency</th>
+            <th>Latest Price</th>
+            <th>Latest Price Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <select name="tickername" id="tickername" class="bg-blue-400 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"></select>
+            </td>
+            <td id="ticker"></td>
+            <td id="exchange"></td>
+            <td id="currency"></td>
+            <td id="latestprice"></td>
+            <td id="latestpricedate"></td>
+          </tr>
+        </tbody>
+      </table> -->
+
+
     <table class="table-auto mt-5" border=1>
       <thead>
         <tr>
@@ -104,6 +205,7 @@
   </div>
 </div>
   
+
 
 
 <!-- Put the Firebase config here -->

@@ -24,7 +24,7 @@ firebase.auth().onAuthStateChanged(async function(user) {
       let respExchange  = await fetch(`http://api.marketstack.com/v1/exchanges?access_key=${apiKey}`)
       let jsonExchange  = await respExchange.json()
       let exchange      = jsonExchange.data
-      
+
       //loop through exchanges array
       for (let i=0; i<exchange.length-1; i++) {
         let exc_name = exchange[i].name
@@ -39,6 +39,21 @@ firebase.auth().onAuthStateChanged(async function(user) {
       //trigger change event in order to load tickers to its corresponding select control.
       // See: selExchange.addEventListener
       document.querySelector("#slExchange").dispatchEvent(new Event("change"));
+
+
+
+    // Sign-out button 
+      
+      document.querySelector('.sign-in-or-sign-out').innerHTML = `
+      <button class="text-pink-500 underline sign-out">Sign Out</button>`
+      document.querySelector('.sign-in-or-sign-out').addEventListener('click', function(event) {
+      console.log('sign out clicked')
+      firebase.auth().signOut()
+      document.location.href = 'index.html'
+      })
+
+
+
     } else {
       // Signed out
       window.location.href = "index.html";
@@ -77,7 +92,8 @@ firebase.auth().onAuthStateChanged(async function(user) {
       let response = await fetch(`http://api.marketstack.com/v1/tickers?access_key=${apiKey}&exchange=${optionMicr}`)
       let json = await response.json()
       let stock = json.data
-      
+    
+
       //loop through stock/tickers array
       for (let i=0; i<stock.length; i++) {
         let stk_name = stock[i].name

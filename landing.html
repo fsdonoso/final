@@ -18,103 +18,209 @@
   
 
 <!-- Creates the upper part of the website incl. spacing out Logo, name, and sing-out-button-->
-<div class="p-6 bg-grey-200">
+<div class="p-6 bg-gray-100">
   
   <div class="md:flex">
     
-    <div class="md:w-1/6">
-        <div id="logo">LOGO</div>
+    <div class="lg:w-1/6">
+        <div id="logo"  class="mt-5">LOGO</div>
     </div>
     
 
-    <div class="md:w-4/6">
-          <h1 id="usr" class="text-2xl semibold mb-2 lg:mb-0"></h1>
-          <h3 id="eml"> class="text-2xl"</h3>
+    <div class="lg:w-9/12">
+          <h1 id="usr" class="text-2xl semibold mb-2  mt-5"></h1>
+          <h3 id="eml" class="text-xl"></h3>
     </div>
     
-    <div class="md:w-1/6">
-        <div class="sign-in-or-sign-out"></div>
+    <div class="lg:w-1/12">
+        <div class="sign-in-or-sign-out mt-5"></div>
     </div>
   </div>
   
 
 <!-- Header + Drop down to choose exchange -->
-  <div class="w-full xl:w-1/3">
+  <div class="w-full">
     <p class="text-xl font-semibold mt-20">Choose an exchange</p>
   </div>
 
-  <div class="flex flex-col mb-20">
+  <div class="flex flex-col mb-10">
       <select name="slExchange" id="slExchange" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"></select>
   </div>
-
-  
 
 
 
 <!-- Create overview with according spacing -->
 
 
-<!-- <div class="w-full xl:w-1/3">
-  <p class="text-xl font-semibold">Choose Stock parameters</p>
-  <div class="w-full bg-white border rounded-lg p-4">
- -->
+   <!--Stock parameters panel on the left -->
+<div class="md:flex">
+  <div class="w-full xl:w-1/3">
 
+  <p class="text-xl font-semibold md:mt-10">Choose Stock parameters</p>
+  <div class="w-full bg-white border rounded-lg px-4">
+ 
 
-    <!-- First row of data -->
-    <!-- <div class="md:flex my-5">
+      <!--Inner layer Stock parameters panel -->
+     <div class="md:flex my-5">
         
-      <div class="md:w-1/3">
-          <div class="font-bold">Stock #1 Pick</div>
-      </div>
-     </div>
+          <div class="w-full xl:w-2/3">
+              <div class="font-bold">Stock #1 Pick</div>
+          </div>
+        </div>
 
 
-    <div class="md:flex my-5">
-      <div class="md:w-1/3">
-        <select name="tickername" id="tickername" class="bg-blue-400 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"></select>
-      </div> 
-    </div> -->
+        <div class="md:flex my-5">
+          <div class="w-full xl:w-2/3">
+            <select name="tickername" id="tickername" class="bg-blue-400 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"></select>
+          </div> 
+        </div> 
 
-   <!-- Second row of data -->
-
-    <!-- <div class="md:flex my-5">
-      <div class="md:w-1/3">
-          <div class="font-bold">Start Date</div>
-      </div>      
-    </div>
-
-
-    <div class="md:flex my-5">
-      <div class="md:w-1/3">
-        <input type="date" id="dtinidate" class="datepicker bg-blue-400 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"/>
-      </div>   
-    </div>
-
-    <div class="md:flex my-5">
-      <div class="md:w-1/3">
-
-      
-      <div class="md:w-1/3">
-        <div class="font-bold">End Date</div>
-      </div>
-   
-      <div class="md:w-1/3">
-        <input type="date" id="dtenddate" class="datepicker bg-blue-400 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"/>
-      </div>
     
+        <div class="md:flex my-5">
+          <div class="w-full xl:w-2/3">
+              <div class="font-bold">Start Date</div>
+          </div>      
+        </div>
+
+
+        <div class="md:flex my-5">
+          <div class="w-full xl:w-2/3">
+            <input type="date" id="dtinidate" class="datepicker bg-blue-400 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"/>
+          </div>   
+        </div>
+
+        <div class="md:flex my-5">
+          <div class="w-full xl:w-2/3">
+
+          
+          <div class="w-full xl:w-2/3">
+            <div class="font-bold">End Date</div>
+          </div>
+      
+          <div class="w-full xl:w-2/3">
+            <input type="date" id="dtenddate" class="datepicker bg-blue-400 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"/>
+          </div>
     </div>
-
-
-
+  </div>
   </div>  
-</div>    -->
+</div>   
 
 
+      <!--Stock parameters panel -->
+      <div class="md:w-full xl:w-2/3 xl:px-3">
+
+              <p class="text-xl font-semibold md:mt-10">Overview stock parameters</p>
+              <div class="w-full bg-white border rounded-lg p-4">
+            
 
 
+              <!--Inner boxes of Stock parameters panel -->
+              
+              <div class="md:flex">
+              <div class="md:w-full xl:w-1/2 xl:px-3">
+
+                      <div class="w-full bg-gray-100 border rounded-lg flex justify-between items-center px-4 py-2 mb-4">
+                          <div>
+                              <p class="font-semibold text-xl">Ticker</p>
+                          </div>
+                          <span name="tickername" id="ticker" class="text-blue-500 font-semibold text-lg"></span>
+                      </div>
+
+                      <div class="w-full bg-gray-100 border rounded-lg flex justify-between items-center px-4 py-2 mb-4">
+                          <div>
+                              <p class="font-semibold text-xl">Exchange</p>
+                          </div>
+                          <span name="tickername" id="exchange" class="text-blue-500 font-semibold text-lg"></span>
+                      </div>
+
+                      <div class="w-full bg-gray-100 border rounded-lg flex justify-between items-center px-4 py-2 mb-4">
+                          <div>
+                              <p class="font-semibold text-xl">Currency</p>
+                          </div>
+                          <span name="tickername" id="currency" class="text-blue-500 font-semibold text-lg"></span>
+                      </div>
+
+                      <div class="w-full bg-gray-100 border rounded-lg flex justify-between items-center px-4 py-2 mb-4">
+                          <div>
+                              <p class="font-semibold text-xl">Latest Price</p>
+                          </div>
+                          <span name="tickername" id="latestprice" class="text-blue-500 font-semibold text-lg"></span>
+                      </div>
+
+                      <div class="w-full bg-gray-100 border rounded-lg flex justify-between items-center px-4 py-2 mb-4">
+                        <div>
+                            <p class="font-semibold text-xl">Latest Price Date</p>
+                        </div>
+                        <span name="tickername" id="latestpricedate" class="text-blue-500 font-semibold text-lg"></span>
+                      </div>
+
+              </div>
+             
+              <div class="md:w-full xl:w-1/2 xl:px-3">
+
+                      <div class="w-full bg-gray-100 border rounded-lg flex justify-between items-center px-4 py-2 mb-4">
+                        <div>
+                            <p class="font-semibold text-xl">Avg</p>
+                        </div>
+                        <span type="date" id="avg" class="text-blue-500 font-semibold text-lg"></span>
+                      </div>
+
+                      <div class="w-full bg-gray-100 border rounded-lg flex justify-between items-center px-4 py-2 mb-4">
+                        <div>
+                            <p class="font-semibold text-xl">Percentage</p>
+                        </div>
+                        <span type="date" id="percentage" class="text-blue-500 font-semibold text-lg"></span>
+                      </div>
+
+                      <div class="w-full bg-gray-100 border rounded-lg flex justify-between items-center px-4 py-2 mb-4">
+                        <div>
+                            <p class="font-semibold text-xl">min</p>
+                        </div>
+                        <span type="date" id="min" class="text-blue-500 font-semibold text-lg"></span>
+                      </div>
+
+                      <div class="w-full bg-gray-100 border rounded-lg flex justify-between items-center px-4 py-2">
+                        <div>
+                            <p class="font-semibold text-xl">Max</p>
+                        </div>
+                        <span type="date" id="max" class="text-blue-500 font-semibold text-lg"></span>
+                      </div>
+              </div>
+              </div>
+            
+            </div>
+
+          </div>   
+        </div>  
+        
 
 
-  <div class="flex flex-col my-10">
+        
+      <!-- Get button -->
+        
+      
+      <div class="md:flex">
+        <div class="md:w-full xl:w-1/9 xl:px-3">
+
+              <div class="mx-3">
+                    <button type="button" id="calc" name="calc"  class="mt-5 mb-20 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">Get data</button>
+                  </div>          
+        </div>
+             
+        
+    <!-- Add stock to watchlist button -->
+    <div class="md:w-full xl:w-1/9 xl:px-3">        
+    <div class="mx-3">
+                <button type="button" id="calc" name="calc"  class="mt-5 mb-20 bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded">Add Stock to Watchlist</button>
+              </div>
+            </div>        
+   
+
+  </div>
+</div>
+
+
+  <!-- <div class="flex flex-col my-10">
     <table class="table-auto" border 1>
       <thead>
         <tr>
@@ -138,7 +244,7 @@
           <td id="latestpricedate"></td>
         </tr>
       </tbody>
-    </table>
+    </table> -->
 
 
 <!-- 
@@ -167,10 +273,10 @@
             <td id="latestpricedate"></td>
           </tr>
         </tbody>
-      </table> -->
+      </table>  -->
 
 
-    <table class="table-auto mt-5" border=1>
+    <!-- <table class="table-auto mt-5" border=1>
       <thead>
         <tr>
           <th>Start Date</th>
@@ -195,16 +301,8 @@
           <td id="max"></td>
         </tr>
       </tbody>
-    </table>
+    </table> -->
 
-  <!-- Get button -->
- <div class="md:w-1/3">
-    <button type="button" id="calc" name="calc"  class="my-20 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">Get data</button>
-  </div>
-  
-  </div>
-</div>
-  
 
 
 

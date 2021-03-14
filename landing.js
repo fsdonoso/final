@@ -28,7 +28,6 @@ firebase.auth().onAuthStateChanged(async function(user) {
 
       // Show email on screen
       document.querySelector('#eml').innerHTML = user.email;
-
       
       //Exchanges API Call
       let respExchange  = await fetch(`http://api.marketstack.com/v1/exchanges?access_key=${apiKey}`)
@@ -73,12 +72,12 @@ firebase.auth().onAuthStateChanged(async function(user) {
       // changes might entail to pull some of the HTML functionality into the JS file and then add it depending on users etc. 
 
       // Get data of user specific watch-listed Stocks - TO BE MADE USER-SPECIFIC
-      let snapshotWatchlisted = await db.collection('watchlisted').get()
+      let snapshotWatchlisted = await db.collection('watchlisted').where('userId', '==', user.uid).get()
       console.log(`Number of stocks watchlisted: ${snapshotWatchlisted.size}`)
       let watchlistedStocks = snapshotWatchlisted.docs
-      // console.log(watchlistedStocks)
+      console.log(watchlistedStocks)
 
-      //  Add event listener to the watch-list button to 
+      //  Add event listener to the watch-list button to (Note: Derrick added this code to Rows 194-203 since I think that where is should go)
           document.querySelector('#watchlist-button').addEventListener('click', async function(event) {
               event.preventDefault()
               console.log('watchlist button was clicked')   
@@ -108,11 +107,7 @@ firebase.auth().onAuthStateChanged(async function(user) {
                                 </div>        
               `)
            })
-    
   
-
-
-
 
     } else {
       // Signed out
@@ -158,6 +153,7 @@ firebase.auth().onAuthStateChanged(async function(user) {
       for (let i=0; i<stock.length; i++) {
         let stk_name = stock[i].name
         let stk_symb = stock[i].symbol
+        // console.log(stk_name)
 
         //append to tickername select control.
         document.querySelector('#tickername').insertAdjacentHTML('beforeend', `<option data-tick="" value="${stk_symb}">${stk_name}</option>`)
@@ -195,7 +191,34 @@ firebase.auth().onAuthStateChanged(async function(user) {
       document.querySelector('#latestpricedate').innerHTML = fechaEOD;
     });
 
+    // First Firebase collection that tracks stock(s) that a user is interest in. A watch list of stocks.  
+    document.querySelector('#watchlist-button').addEventListener('click', async function(event) {
+    event.preventDefault()
+    console.log('watchlist button was clicked')   
+        
+    await db.collection('watchlisted').doc(`${stk_symb}-${user.uid}`).set({
+      userId: user.uid,
+      stockSymb: stk_symb
+    })
+    })  
 
+    // Second Firebase collection that records a stock's latest stock price and the latest price date if a user clicks on a "Record lastest stock price" button.  
+    // The use case is if the user wants to view this specific stock price in the future (e.g. the last time I seriously looked at this stock, it was at this price).  
+    // Add event listener to the "Record latest stock price" button 
+    document.querySelector('#record-button').addEventListener('click', async function(event) {
+    event.preventDefault()
+    console.log('Record button was clicked')   
+
+    // The document ID is a combination of the stock name and the user ID indicating which user has watched. 
+    // This "composite" ID could simply be `${stk_symb}-${user.uid}`. This should 
+    // be set when the "Record latest stock price" button is clicked. 
+    await db.collection('track').doc(`${stk_symb}-${user.uid}`).set({
+      userId: user.uid,
+      stockSymb: stk_symb,
+      lastestPrice: precioEOD,
+      lastestDate: fechaEOD
+    })  
+    })
 
     btnCalc.addEventListener('click', async function(event) {
       let inidate = document.querySelector('#dtinidate');

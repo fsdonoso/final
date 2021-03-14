@@ -8,13 +8,16 @@ firebase.auth().onAuthStateChanged(async function(user) {
     if (user) {
       // Signed in
       console.log('signed in')
+      console.log(user.uid)
+      console.log(user.displayName)
+      console.log(user.email)
       
       // Retrieve user Information from firestore
       // DisplayName and Email
       let db = firebase.firestore()
       db.collection('users').doc(user.uid).set({
-        name : user.displayName,
-        email : user.email
+        name: user.displayName,
+        email: user.email
       });
       //Show Current user on screen
       let loggedinUser = user.displayName
@@ -68,7 +71,6 @@ firebase.auth().onAuthStateChanged(async function(user) {
       // c.) When stock appears in Watchlist, the Stockname and price needs to be pulled in ---> might need to change order of code because that is only defined below currenlty  
       // d.) Functionality for stocks to be un-watchlisted in the watchlist
       // changes might entail to pull some of the HTML functionality into the JS file and then add it depending on users etc. 
-
 
       // Get data of user specific watch-listed Stocks - TO BE MADE USER-SPECIFIC
       let snapshotWatchlisted = await db.collection('watchlisted').get()

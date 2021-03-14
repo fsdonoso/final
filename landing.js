@@ -66,17 +66,18 @@ firebase.auth().onAuthStateChanged(async function(user) {
       // a.) User-specifc watchlist collection needs to be set-uo (as in HW7) and changes made above 
       // b.) When user is logged in it needs to show the watchlist of stocks - rn only coded for stocks to be added 
       // c.) When stock appears in Watchlist, the Stockname and price needs to be pulled in ---> might need to change order of code because that is only defined below currenlty  
-      // d.) Functionality for stocks to be un-watchlisted in the watchlist (the) 
+      // d.) Functionality for stocks to be un-watchlisted in the watchlist
+      // changes might entail to pull some of the HTML functionality into the JS file and then add it depending on users etc. 
 
 
       // Get data of user specific watch-listed Stocks - TO BE MADE USER-SPECIFIC
       let snapshotWatchlisted = await db.collection('watchlisted').get()
-      console.log(`Number of watched movies: ${snapshotWatchlisted.size}`)
+      console.log(`Number of stocks watchlisted: ${snapshotWatchlisted.size}`)
       let watchlistedStocks = snapshotWatchlisted.docs
       // console.log(watchlistedStocks)
 
       //  Add event listener to the watch-list button to 
-          document.querySelector('watchlist-button').addEventListener('click', async function(event) {
+          document.querySelector('#watchlist-button').addEventListener('click', async function(event) {
               event.preventDefault()
               console.log('watchlist button was clicked')   
               
@@ -85,7 +86,7 @@ firebase.auth().onAuthStateChanged(async function(user) {
 
 
               // 2.) Show the added stock on the page in the watchlist - - TO BE MADE USER-SPECIFIC
-              document.querySelector(`watchlist-element`).insertAdjacentHTML('beforeend', `
+              document.querySelector('#watchlist-element').insertAdjacentHTML('beforeend', `
                                 <div class="md:w-full xl:w-1/3">
                                 <div class="bg-white rounded-md flex flex-1 items-center p-4">
 

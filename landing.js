@@ -44,7 +44,7 @@ if (user) {
     
 
     // Get stock data
-    let response = await fetch(`http://api.marketstack.com/v1/tickers?access_key=1a84597ee67f7b6234b19dcda5a1e678&exchange=XNAS`)
+    let response = await fetch(`https://api.marketstack.com/v1/tickers?access_key=1a84597ee67f7b6234b19dcda5a1e678&exchange=XNAS`)
     let jsonStocks = await response.json()
     let stock = jsonStocks.data
 
@@ -117,7 +117,7 @@ if (user) {
       // console.log(nomtick)
 
       //Get nomtick/acronym to call API Endpoint of the latest price/date
-      let response = await fetch(`http://api.marketstack.com/v1/eod/latest?access_key=${apiKey}&symbols=${nomtick}`)
+      let response = await fetch(`https://api.marketstack.com/v1/eod/latest?access_key=${apiKey}&symbols=${nomtick}`)
       let json = await response.json()
       let deod = json.data[0];
       var precioEOD   = Math.round((deod.close)*100) / 100;
@@ -219,7 +219,7 @@ if (user) {
             strEndDate = new Date(enddate.value.toString());
 
             //retrieve historical data from ticker
-            let response = await fetch(`http://api.marketstack.com/v1/eod?access_key=${apiKey}&symbols=${nomtick}&date_from=${inidate.value}&date_to=${enddate.value}`)
+            let response = await fetch(`https://api.marketstack.com/v1/eod?access_key=${apiKey}&symbols=${nomtick}&date_from=${inidate.value}&date_to=${enddate.value}`)
             let json = await response.json();
             let hdeod = json.data;
             console.log(hdeod)

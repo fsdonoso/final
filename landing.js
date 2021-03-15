@@ -44,13 +44,13 @@ if (user) {
     
 
     // Get stock data
-    let response = await fetch(`https://api.marketstack.com/v1/tickers?access_key=1a84597ee67f7b6234b19dcda5a1e678&exchange=XNAS`)
-    let jsonStocks = await response.json()
-    let stock = jsonStocks.data
+    // let response = await fetch(`https://api.marketstack.com/v1/tickers?access_key=1a84597ee67f7b6234b19dcda5a1e678&exchange=XNAS`)
+    // let jsonStocks = await response.json()
+    // let stock = jsonStocks.data
 
-    // let response = await fetch(`/.netlify/functions/get_watchlist?userId=${user.uid}`)
-    // let todos = await response.json()
-    // console.log(todos)
+    let response = await fetch(`/.netlify/functions/get_watchlist?userId=${user.uid}`)
+    let todos = await response.json()
+    console.log(todos)
 
 
       //loop through stock/tickers array
@@ -149,25 +149,25 @@ if (user) {
                               console.log(`${stockAlreadyWatchlisted} already watchlisted`)
                           } else {
 
-                                // Add stock to the user-specific userwatchlist and add HTML accordingly
+                                //Add stock to the user-specific userwatchlist and add HTML accordingly
                                 
-                                // let response = await fetch('/.netlify/functions/create_watchlist', {
-                                //   method: 'WATCHLIST',
-                                //   body: JSON.stringify({
-                                //     userId: user.uid, 
-                                //     stockSymb: nomtick,
-                                //     lastestPrice: precioEOD,
-                                //     lastestDate: fechaEOD
-                                //   })
-                                // })
-                                // let watchlistfetched = await response.json()
-
-                                await db.collection('userwatchlist').doc(`${user.uid}-${nomtick}`).set({
-                                  userId: user.uid, 
-                                  stockSymb: nomtick,
-                                  lastestPrice: precioEOD,
-                                  lastestDate: fechaEOD
+                                let response = await fetch('/.netlify/functions/create_watchlist', {
+                                  method: 'WATCHLIST',
+                                  body: JSON.stringify({
+                                    userId: user.uid, 
+                                    stockSymb: nomtick,
+                                    lastestPrice: precioEOD,
+                                    lastestDate: fechaEOD
+                                  })
                                 })
+                                let watchlistfetched = await response.json()
+
+                                // await db.collection('userwatchlist').doc(`${user.uid}-${nomtick}`).set({
+                                //   userId: user.uid, 
+                                //   stockSymb: nomtick,
+                                //   lastestPrice: precioEOD,
+                                //   lastestDate: fechaEOD
+                                // })
 
                                 
                               document.querySelector('#watchlist-element').insertAdjacentHTML('beforeend', `
@@ -259,6 +259,38 @@ if (user) {
           }
 
         });
+
+  
+  // Listen for comment form submit and create/render the new post
+    // document.querySelector('form').addEventListener('submit', async function(event) {
+    //   event.preventDefault()
+    //   let commentID = user.displayName
+    //   let postImageUrl = document.querySelector('#image-url').value
+    //   let response = await fetch('/.netlify/functions/create_post', {
+    //     method: 'POST',
+    //     body: JSON.stringify({
+    //       userId: user.uid,
+    //       username: postUsername,
+    //       imageUrl: postImageUrl
+    //     })
+    //   })
+    //   let post = await response.json()
+    //   document.querySelector('#image-url').value = '' // clear the image url field
+    //   renderPost(post)
+    // })
+
+    // let response = await fetch('/.netlify/functions/get_posts')
+    // let posts = await response.json()
+    // for (let i=0; i<posts.length; i++) {
+    //   let post = posts[i]
+    //   renderPost(post)
+
+
+
+
+
+
+
 
 
     })
@@ -398,6 +430,9 @@ if (user) {
     let day = date.getDate().toString().padStart(2, '0');
     return month + '/' + day + '/' + year;
   	}
+
+
+
 
 
 

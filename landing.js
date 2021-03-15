@@ -12,10 +12,10 @@ let db = firebase.firestore()
 if (user) {
       
       // Signed in
-      console.log('signed in')
-      console.log(user.uid)
-      console.log(user.displayName)
-      console.log(user.email)
+      // console.log('signed in')
+      // console.log(user.uid)
+      // console.log(user.displayName)
+      // console.log(user.email)
       
       // Add to user collection
       db.collection('users').doc(user.uid).set({
@@ -88,48 +88,35 @@ if (user) {
         let stk_name = stock[i].name
         let stk_symb = stock[i].symbol
         let price = stk_symb.close
-
-      // Populate watchlist - LAMBDA
-                 let stockAlreadyWatchlisted =  await db.collection('userwatchlist').doc(`${user.uid}-${stk_symb}`).get()
-
-                      // let response = await fetch(`/.netlify/functions/get_watchlist?userId=${user.uid}`)
-                      // let listed = await response.json()
-                      // console.log(listed)
-  
-
-                                          if (stockAlreadyWatchlisted.exists) {
-                                                // console.log(`${stockAlreadyWatchlisted} appened watchlisted`)
-                                                //Append stock to the watchlist when page is loaded
-                                                document.querySelector('#watchlist-element').insertAdjacentHTML('beforeend', `
-                                                      <div id="watchlist-element-${user.uis}-${stk_symb}" class="md:w-full xl:w-1/3">
-                                                      <div class="bg-white rounded-md flex flex-1 items-center p-4 w-full">
-
-                                                      <div class="xl:px-3">
-                                                            <button id="button-watchlist-element-${user.uid}-${stk_symb}" class="bg-yellow-500 hover:bg-yellow-200 text-white font-bold py-2 px-4 rounded inline-flex items-center">
-                                                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-yellow-300" viewBox="0 0 20 20" fill="currentColor">
-                                                                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                                                                        </svg>
-                                                            </button>
-                                                      </div>
-                                                          
-                                                      <div class="w-full xl:px-3">
-                                                                      <p id="stock-userId-markedId" class="font-semibold text-xl">${stk_name}</p>
-                                                                      </div>
-                                                                      <span id="price-userId-markedId" class="text-blue-500 font-semibold text-lg">${stk_symb}</span>
-                                                                    </div>
-                                                      </div>        
-                                                    `)
-                                                  } else {
-                                                    console.log(`Not yet watchlisted`)
-                                                  }   
+        //console.log(stk_name)
         //append to tickername select control.
         document.querySelector('#tickername').insertAdjacentHTML('beforeend', `<option data-tick="" value="${stk_symb}">${stk_name}</option>`)
       }
 
+      let watchListQuery = await fetch(`/.netlify/functions/get_watchlist?userId=${user.uid}`)
+      let listed = await watchListQuery.json()
+      
+      for(i=0; i < listed.length; i++){
+        document.querySelector('#watchlist-element').insertAdjacentHTML('beforeend', `
+            <div id="watchlist-element-${user.uid}-${listed[i].stockSymb}" class="md:w-full xl:w-1/3">
+            <div class="bg-white rounded-md flex flex-1 items-center p-4 w-full">
 
-
-
-
+            <div class="xl:px-3">
+                  <button id="button-watchlist-element-${user.uid}-${listed[i].stockSymb}" class="bg-yellow-500 hover:bg-yellow-200 text-white font-bold py-2 px-4 rounded inline-flex items-center">
+                              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-yellow-300" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                              </svg>
+                  </button>
+            </div>
+                
+            <div class="w-full xl:px-3">
+                            <p id="stock-userId-markedId" class="font-semibold text-xl">${listed[i].stockSymb}</p>
+                            </div>
+                            <span id="price-userId-markedId" class="text-blue-500 font-semibold text-lg">${listed[i].lastestPrice}</span>
+                          </div>
+            </div>        
+        `)
+      }
 
     //trigger change event in order to retrieve its corresponding data (latest price, latest price date)
     //See: selTickers.addEventListener
@@ -156,7 +143,7 @@ if (user) {
       var precioEOD   = Math.round((deod.close)*100) / 100;
 
       var fecha = new Date(deod.date);
-      var fechaEOD    = getFormattedDate(fecha);
+      var fechaEOD  = getFormattedDate(fecha);
       console.log(precioEOD)
 
       var name = deod.exchange
@@ -170,72 +157,52 @@ if (user) {
       document.querySelector('#exchange').innerHTML = exchan;
       document.querySelector('#currency').innerHTML = "USD";
 
+      let ticker = document.querySelector('#ticker').innerHTML
+      let price = document.querySelector('#latestprice').innerHTML
+
+      console.log(ticker)
+      console.log(price)
+      
 
       // Add event listener to the watch-list button
-                    document.querySelector('#watchlist-button').addEventListener('click', async function(event) {
-                     event.preventDefault()
-                                                      
-                      let stockAlreadyWatchlisted =  await db.collection('userwatchlist').doc(`${user.uid}-${nomtick}`).get()
-                      console.log(stockAlreadyWatchlisted)   
+  document.querySelector('#watchlist-button').addEventListener('click', async function(event) {
+    event.preventDefault()
+        
+            // LAMBDA Add stock to the user-specific userwatchlist and add HTML accordingly
+            
+    let response = await fetch('/.netlify/functions/create_watchlist', {
+      method: 'POST',
+      body: JSON.stringify({
+        userId: user.uid, 
+        stockSymb: ticker,
+        lastestPrice: price
+      })
+    })
+            // let watchlistfetched = await response.json()
 
-                          if (stockAlreadyWatchlisted.exists) {
-                              console.log(`${stockAlreadyWatchlisted} already watchlisted`)
-                          } else {
+            
+    document.querySelector('#watchlist-element').insertAdjacentHTML('beforeend', `
+      <div id="watchlist-element-${user.uid}-${nomtick}" class="md:w-full xl:w-1/3">
+      <div class="bg-white rounded-md items-center p-4">
 
-                                // LAMBDA Add stock to the user-specific userwatchlist and add HTML accordingly
-                                
-                                // let response = await fetch('/.netlify/functions/create_watchlist', {
-                                //   method: 'POST',
-                                //   body: JSON.stringify({
-                                //     userId: user.uid, 
-                                //     stockSymb: nomtick,
-                                //     lastestPrice: precioEOD,
-                                //     lastestDate: fechaEOD
-                                //   })
-                                // })
-                                // let watchlistfetched = await response.json()
+      <div class="xl:px-3">
+            <button id="button-watchlist-element-${user.uid}-${nomtick}" class="bg-yellow-500 hover:bg-yellow-200 text-white font-bold py-2 px-4 rounded inline-flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-yellow-300" viewBox="0 0 20 20" fill="currentColor">
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+            </button>
+      </div>
+          
+      <div class="w-full xl:px-3">
+                      <p class="font-semibold text-xl">${nomtick}</p>
+                      </div>
+                      <span class="text-blue-500 font-semibold text-lg">$${precioEOD}</span>
+                    </div>
+      </div>        
+    `)    
+  })
 
-                                await db.collection('userwatchlist').doc(`${user.uid}-${nomtick}`).set({
-                                  userId: user.uid, 
-                                  stockSymb: nomtick,
-                                  lastestPrice: precioEOD,
-                                  lastestDate: fechaEOD
-                                })
-
-                                
-                              document.querySelector('#watchlist-element').insertAdjacentHTML('beforeend', `
-                                          <div id="watchlist-element-${user.uid}-${nomtick}" class="md:w-full xl:w-1/3">
-                                          <div class="bg-white rounded-md items-center p-4">
-
-                                          <div class="xl:px-3">
-                                                <button id="button-watchlist-element-${user.uid}-${nomtick}" class="bg-yellow-500 hover:bg-yellow-200 text-white font-bold py-2 px-4 rounded inline-flex items-center">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-yellow-300" viewBox="0 0 20 20" fill="currentColor">
-                                                              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                                                            </svg>
-                                                </button>
-                                          </div>
-                                              
-                                          <div class="w-full xl:px-3">
-                                                          <p class="font-semibold text-xl">${nomtick}</p>
-                                                          </div>
-                                                          <span class="text-blue-500 font-semibold text-lg">$${precioEOD}</span>
-                                                        </div>
-                                          </div>        
-                                        `)
-
-                            }                    
-                      })
-
-                      // document.querySelector(`#button-watchlist-element-${user.uid}-${nomtick}`).addEventListener('click', async function(event) {
-                      //   event.preventDefault()
-                      //   console.log('UN-watchlist button was clicked')   
-                      //   await db.collection('userwatchlist').doc(`${user.uid}-${nomtick}`).delete()
-                      //   console.log(`watchlist-element-${user.uid}-${nomtick}`)
-                      //   document.querySelector(`button-watchlist-element-${user.uid}-${nomtick}`).classList.add('opacity-20')
-                      // })
-         
                       
-
                        // Add event Listener to Get button
                       let btnCalc = document.querySelector("#calc");
                       btnCalc.addEventListener('click', async function(event) {
@@ -320,134 +287,6 @@ if (user) {
 
     })
 
-            // //Get nomtick/acronym to call API Endpoint of the latest price/date
-            // let response = await fetch(`http://api.marketstack.com/v1/eod/latest?access_key=3565d6cc3aa977584cb36ba340188d02&symbols=${nomtick}`)
-            // let jsonStockData = await response.json()
-            // let exchange = jsonStockData.data[0].exchange 
-            // let closingPrice = jsonStockData.data[0].close
-            // let close = jsonStockData.data[0].close
-            // let closingPrice = Math.round((deod.close)*100) / 100;
-            // var closingPriceformatted    = getFormattedDate(fecha)
-            // console.log(closingPriceformatted)
-         
-          
-                    // var elt        = document.getElementById('slExchange');
-                    // var optionCurr    = elt.options[elt.selectedIndex].getAttribute("data-curr");
-                    // var optionExch    = elt.options[elt.selectedIndex].getAttribute("data-acro");
-              
-              
-                    //           //Add event listener to the watch-list button
-                    //               document.querySelector('#watchlist-button').addEventListener('click', async function(event) {
-                    //                   event.preventDefault()
-                                                                    
-                    //                 let stockAlreadyWatchlisted =  await db.collection('userwatchlist').doc(`${user.uid}-${nomtick_first_four}`).get()
-                    //                 console.log(stockAlreadyWatchlisted)   
-              
-                    //                     if (stockAlreadyWatchlisted.exists) {
-                    //                         console.log(`${stockAlreadyWatchlisted} already watchlisted`)
-                    //                     } else {
-              
-                    //                           // Add stock to the user-specific userwatchlist and add HTML accordingly
-                    //                           await db.collection('userwatchlist').doc(`${user.uid}-${nomtick_first_four}`).set({
-                    //                             userId: user.uid,
-                    //                             stockSymb: nomtick_first_four,
-                    //                             lastestPrice: precioEOD,
-                    //                             lastestDate: fechaEOD
-                    //                           })
-              
-                                              
-                    //                         document.querySelector('#watchlist-element').insertAdjacentHTML('beforeend', `
-                    //                                     <div id="watchlist-element-${user.uid}-${nomtick_first_four}" class="md:w-full xl:w-1/3">
-                    //                                     <div class="bg-white rounded-md items-center p-4">
-              
-                    //                                     <div class="xl:px-3">
-                    //                                           <button id="button-watchlist-element-${user.uid}-${nomtick_first_four}" class="bg-yellow-500 hover:bg-yellow-200 text-white font-bold py-2 px-4 rounded inline-flex items-center">
-                    //                                                       <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-yellow-300" viewBox="0 0 20 20" fill="currentColor">
-                    //                                                         <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                    //                                                       </svg>
-                    //                                           </button>
-                    //                                     </div>
-                                                            
-                    //                                     <div class="w-full xl:px-3">
-                    //                                                     <p class="font-semibold text-xl">${nomtick_first_four}</p>
-                    //                                                     </div>
-                    //                                                     <span class="text-blue-500 font-semibold text-lg">$${precioEOD}</span>
-                    //                                                   </div>
-                    //                                     </div>        
-                    //                                   `)
-              
-                    //                       }                    
-                    //                 })
-              
-              
-                    //                 document.querySelector(`#button-watchlist-element-${user.uid}-${nomtick_first_four}`).addEventListener('click', async function(event) {
-                    //                   event.preventDefault()
-                    //                   console.log('UN-watchlist button was clicked')   
-                    //                   await db.collection('userwatchlist').doc(`${user.uid}-${nomtick_first_four}`).delete()
-                    //                   console.log(`watchlist-element-${user.uid}-${nomtick_first_four}`)
-                    //                   document.querySelector(`button-watchlist-element-${user.uid}-${nomtick_first_four}`).classList.add('opacity-20')
-                    //                 })
-                                                          
-              
-                    //           // // Second Firebase collection that records a stock's latest stock price and the latest price date if a user clicks on a "Record lastest stock price" button.  
-                    //           // // The use case is if the user wants to view this specific stock price in the future (e.g. the last time I seriously looked at this stock, it was at this price).  
-                    //           // // Add event listener to the "Record latest stock price" button 
-                    //           // document.querySelector('#record-button').addEventListener('click', async function(event) {
-                    //           // event.preventDefault()
-                    //           // console.log('Record button was clicked')   
-                          
-                                      
-                                
-            
-
-
-
-                  
-                    
-                    // // WATCHLIST enable watchlist functionality                                    
-                    //                       // Check if this user has already bookmarked this stock 
-                    //                       let stockAlreadyWatchlisted =  await db.collection('userwatchlist').doc(`${user.uid}-${stk_symb_first_four}`).get()
-                    //                       // console.log(`${user.uid}-${stk_symb_first_four}`)
-                    //                       // console.log(stockAlreadyWatchlisted)
-
-                    //                       if (stockAlreadyWatchlisted.exists) {
-                    //                             console.log(`${stockAlreadyWatchlisted} appened watchlisted`)
-                    //                             //Append stock to the watchlist when page is loaded
-                    //                             document.querySelector('#watchlist-element').insertAdjacentHTML('beforeend', `
-                    //                                   <div id="watchlist-element-${user.uis}-${stk_symb_first_four}" class="md:w-full xl:w-1/3">
-                    //                                   <div class="bg-white rounded-md flex flex-1 items-center p-4">
-
-                    //                                   <div class="xl:px-3">
-                    //                                         <button id="button-watchlist-element-${user.uid}-${stk_symb_first_four}" class="bg-yellow-500 hover:bg-yellow-200 text-white font-bold py-2 px-4 rounded inline-flex items-center">
-                    //                                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-yellow-300" viewBox="0 0 20 20" fill="currentColor">
-                    //                                                       <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                    //                                                     </svg>
-                    //                                         </button>
-                    //                                   </div>
-                                                          
-                    //                                   <div class="w-full xl:px-3">
-                    //                                                   <p id="stock-userId-markedId" class="font-semibold text-xl">${stk_symb_first_four}</p>
-                    //                                                   </div>
-                    //                                                   <span id="price-userId-markedId" class="text-blue-500 font-semibold text-lg">$TBD</span>
-                    //                                                 </div>
-                    //                                   </div>        
-                    //                                 `)
-                    //                               } else {
-                    //                                 console.log(`Not yet watchlisted`)
-                    //                               }   
-                    //   }
-
-    //  })
-
-    
-
-      
-
-
- 
-
-
-
 
   // Defining the Date function 
   function getFormattedDate(date) {
@@ -456,10 +295,6 @@ if (user) {
     let day = date.getDate().toString().padStart(2, '0');
     return month + '/' + day + '/' + year;
   	}
-
-
-
-
 
 
   // USER SIGNED OUT

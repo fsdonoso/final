@@ -2,32 +2,35 @@
 let firebase = require('./firebase')
 
 exports.handler = async function(event) {
+  console.log("Hello from the backend")
 
-console.log(`the user ID is ${event.queryStringParameters.userId}`)
-let queryStringUserId = event.queryStringParameters.userId
-
-  let db = firebase.firestore()                             // define a variable so we can use Firestore
-  let watchlistedStocksData = []                                        // an empty Array
+  let db = firebase.firestore()  
   
-  let watchlistedStocksQuery = await db.collection('userwatchlist')     // watchlistedStocks from Firestore
-                                        .where('userId', '==', queryStringUserId)                         
-                                        .get()
-  let watchlistedStocks = watchlistedStocksQuery.docs                 
+  // Empty array for data to pushed into 
+  let watchlistedStocksData = []  
 
-  for(let i = 0; i<watchlistedStocks.length; i++)  {
-    let watchlistedStockId = watchlistedStocks[i].userId
-    let watchlistedStockTicker = watchlistedStocks[i].stockSymb
-    let watchlistedStockPrice = watchlistedStocks[i].lastestPrice
-    let watchlistedStockDate = watchlistedStocks[i].lastestDate
+    let userId = event.queryStringParameters.userId
+    // console.log(`the user ID is ${event.queryStringParameters.user.uid}`)
 
-     watchlistedStocksData.push({
-        userId: watchlistedStockId, 
-        stockSymb: watchlistedStockTicker,
-        lastestPrice: watchlistedStockPrice,
-        lastestDate: watchlistedStockDate
-    })
+    // let queryStringUserId = event.queryStringParameters.user.uid
 
-  } 
+ 
+      let watchlistedStocksQuery = await db.collection('userwatchlist').where('userId', '==', `${userId}`).get()
+                              
+      let watchlistedStocks = watchlistedStocksQuery.docs // stores all the watchlisted stocks in a variable  
+      // console.log(watchlistedStocks)                   
+
+      for(let i = 0; i < watchlistedStocks.length; i++)  {
+        let docId = watchlistedStocks[i].id
+        let doc = watchlistedStocks[i].data()
+
+        // Creating objects to push data from firestore into the array
+        watchlistedStocksData.push({
+          Id: docId,
+          stockSymb: doc.stockSymb,
+          lastestPrice: doc.lastestPrice
+        })
+      } 
 
   return {
     statusCode: 200,

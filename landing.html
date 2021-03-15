@@ -23,7 +23,7 @@
   <div class="md:flex">
     
     <div class="lg:w-1/6">
-        <div id="logo"  class="mt-5">LOGO</div>
+      <div class="font-bold content-center mx-auto w-full"><img class="mx-auto" src="https://images.unsplash.com/photo-1468254095679-bbcba94a7066?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1498&q=80" width="128" /></div>
     </div>
     
 
@@ -40,13 +40,8 @@
 
 <!-- Header + Drop down to choose exchange -->
   <div class="w-full">
-    <p class="text-xl font-semibold mt-20">Exchange</p>
+    <p class="bg-blue-500 text-xl text-white font-bold py-2 mt-10 px-4 rounded">NASDAQ Stock viewer</p>
   </div>
-
-  <div class="flex flex-col mb-10">
-      <select name="slExchange" id="slExchange" class=" bg-blue-700 text-white font-bold py-2 px-4 rounded"></select>
-  </div>
-
 
 
 <!-- Create overview with according spacing -->
@@ -135,7 +130,7 @@
 
                       <div class="w-full bg-gray-100 border rounded-lg flex justify-between items-center px-4 py-2 mb-4">
                           <div>
-                              <p class="font-semibold text-xl">Exchange</p>
+                              <p class="font-semibold text-xl">Exchange Ticker</p>
                           </div>
                           <span name="tickername" id="exchange" class="text-blue-500 font-semibold text-lg"></span>
                       </div>
@@ -199,11 +194,11 @@
                           <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-yellow-200" viewBox="0 0 20 20" fill="currentColor">
                             <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                           </svg>
-                          <span class="font-semibold text-xl">Add stock to watchlist</span>
+                          <span class="font-semibold text-xl">Mark stock as interesting</span>
                         </button>
                       </div>
 
-                      <!--Record current stock price button -->
+                      <!-- Record current stock price button
                       <div class="md:w-full w-1/9">
                         <button id="record-button" class="bg-green-400 hover:bg-green-500 text-white font-bold py-2 px-4 rounded inline-flex items-center">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-yellow-200" viewBox="0 0 20 20" fill="currentColor">
@@ -211,7 +206,7 @@
                             </svg>
                             <span class="font-semibold text-xl">Record current stock price</span>
                           </button>
-                        </div>
+                        </div> -->
 
               </div>
               </div>
@@ -226,41 +221,42 @@
 
 
   <!--User-specific watchlist -->
-    <p class="text-xl font-semibold md:mt-10">Your personal Watchlist</p>
+    <p class="text-xl font-semibold md:mt-10">Your Personal Watchlist</p>
   
       <!-- Watch-list element START -->
 
        <!--THIS ELEMENT IS ONLY ADDED FOR ILLUSTRATION PURPOSUES - NEEDS TO BE DELETED WHEN DYNAMIC; WHEN LOGGED IN USE HAS ADDED / IS ADDING STOCKS TO WATCHLIST -->
       
-      <div id="watchlist-element" class="md:flex">
-      <!--  <div class="md:w-full xl:w-1/3">
-                    <div class="bg-white rounded-md flex flex-1 items-center p-4">
- 
-          <div class="xl:px-3">
-                 <button id="unwatch-userId-markedId" class="bg-yellow-500 hover:bg-yellow-200 text-white font-bold py-2 px-4 rounded inline-flex items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-yellow-300" viewBox="0 0 20 20" fill="currentColor">
-                              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                            </svg>
-                 </button>
-          </div>
-               
-           <div class="w-full xl:px-3">
-                          <p id="stock-userId-markedId" class="font-semibold text-xl">STOCK NAME</p>
-                          </div>
-                          <span id="price-userId-markedId" class="text-blue-500 font-semibold text-lg">$233.78</span>
-                        </div>
-          </div>          
-      </div> -->
-    <!-- Watch-list element END -->
+      <div class="md:flex">
+       <div id="watchlist-element" class="w-full">
+        <!-- Watch-list element END -->
+       </div>
 
+     <div class="py-8 px-0 w-full mx-auto">
+            
+      <div class="flex items-center">
+        <div class="md:mx-0 mx-4"><span class="text-xl font-semibold md:mt-10 bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-yellow-500">Post your Stock notes</span></div>
+        <div class="ml-auto text-sm sign-in-or-sign-out"></div>
+      </div>
 
- </div>
+      <div class="notes">
+        <!-- notes rendered from JavaScript -->
+      </div>
 
+      <!-- New post form -->
+      <div>
+        <form class="w-full mt-8">
+          <input type="text" id="note-text" name="note-text" placeholder="Type your Note here" class="my-2 p-2 w-64 border border-gray-400 rounded shadow-xl focus:outline-none focus:ring-purple-500 focus:border-purple-500">
+          <button class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-xl">Add note</button>
+        </form>
+      </div>
+    </div> 
 
 
 </div>
 </div>
- 
+
+
   <!-- <div class="flex flex-col my-10">
     <table class="table-auto" border 1>
       <thead>

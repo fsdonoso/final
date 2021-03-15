@@ -82,18 +82,19 @@ if (user) {
     let jsonStocks = await response.json()
     let stock = jsonStocks.data
 
+      //LOCALLY DEFINED - HOW DO I GET THEM TO BE GLOBAL? 
       //loop through stock/tickers array
       for (let i=0; i<stock.length; i++) {
         let stk_name = stock[i].name
         let stk_symb = stock[i].symbol
         let price = stk_symb.close
 
-      // Populate watchlist
+      // Populate watchlist - LAMBDA
                  let stockAlreadyWatchlisted =  await db.collection('userwatchlist').doc(`${user.uid}-${stk_symb}`).get()
 
                       // let response = await fetch(`/.netlify/functions/get_watchlist?userId=${user.uid}`)
                       // let listed = await response.json()
-                     // console.log(listed)
+                      // console.log(listed)
   
 
                                           if (stockAlreadyWatchlisted.exists) {
@@ -181,7 +182,7 @@ if (user) {
                               console.log(`${stockAlreadyWatchlisted} already watchlisted`)
                           } else {
 
-                                //Add stock to the user-specific userwatchlist and add HTML accordingly
+                                // LAMBDA Add stock to the user-specific userwatchlist and add HTML accordingly
                                 
                                 // let response = await fetch('/.netlify/functions/create_watchlist', {
                                 //   method: 'POST',

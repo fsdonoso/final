@@ -1,10 +1,10 @@
-const firebase = require("firebase/app")
-require("firebase/firestore")
+// const firebase = require("firebase/app")
+// require("firebase/firestore")
 
-const firebaseConfig = {} // replace
+// const firebaseConfig = {} // replace
 
-if (!firebase.apps.length) {
-  firebase.initializeApp(firebaseConfig)
-}
+// if (!firebase.apps.length) {
+//   firebase.initializeApp(firebaseConfig)
+// }
 
-module.exports = firebase
+// module.exports = firebase

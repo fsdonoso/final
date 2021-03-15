@@ -19,11 +19,13 @@ exports.handler = async function(event) {
     userId: user.uid, 
     stockSymb: nomtick,
     lastestPrice: precioEOD,
-    lastestDate: fechaEOD
+    lastestDate: fechaEOD,
+    created: firebase.firestore.FieldValue.serverTimestamp()
   }
 
   let docRef = await db.collection('userwatchlist').add(newWatchlistedStock)
   newWatchlistedStock.id = docRef.id-nomtick
+  console.log(newWatchlistedStock.id)
 
   return {
     statusCode: 200,

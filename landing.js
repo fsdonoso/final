@@ -43,15 +43,44 @@ if (user) {
      })
     
 
+
+    // // listen for the post comment button and add it to database as well as to website 
+    // let commentButton = document.querySelector("#comment-button")
+
+    // commentButton.addEventListener('click', async function(event) {
+    // event.preventDefault()
+    // console.log(`comment button clicked!`)
+    
+    // // get the text of comment
+    // let inputVal = document.querySelector("comment-button").value
+    // console.log(inputVal)
+    // let newCommentText = inputVal.value
+
+
+    //     // Store comment in variable
+    //     let newComment = {
+    //       text: newCommentText
+    //     }
+
+    //  // call  back-end lambda using the new comment's data
+    //  await fetch('/.netlify/functions/create_comment', {
+    //   method: 'POST',
+    //   body: JSON.stringify(newComment)
+    // })
+
+    //  // insert the new comment into the DOM, in the div with the class name "comments", for this post
+    //  let commentsElement = document.querySelector("#comments")
+    //  commentsElement.insertAdjacentHTML('beforeend', `
+    //  <div class="bg-gray-100 rounded border border-gray-400 w-full bg-white border rounded-lg px-4 mb-4 italic"></div>${newComment}</div>
+    //  `)
+    // })
+
+
+
     // Get stock data
-    // let response = await fetch(`https://api.marketstack.com/v1/tickers?access_key=1a84597ee67f7b6234b19dcda5a1e678&exchange=XNAS`)
-    // let jsonStocks = await response.json()
-    // let stock = jsonStocks.data
-
-    let response = await fetch(`/.netlify/functions/get_watchlist?userId=${user.uid}`)
-    let todos = await response.json()
-    console.log(todos)
-
+    let response = await fetch(`https://api.marketstack.com/v1/tickers?access_key=1a84597ee67f7b6234b19dcda5a1e678&exchange=XNAS`)
+    let jsonStocks = await response.json()
+    let stock = jsonStocks.data
 
       //loop through stock/tickers array
       for (let i=0; i<stock.length; i++) {
@@ -61,8 +90,11 @@ if (user) {
 
       // Populate watchlist
                  let stockAlreadyWatchlisted =  await db.collection('userwatchlist').doc(`${user.uid}-${stk_symb}`).get()
-                                          // console.log(`${user.uid}-${stk_symb}`)
-                                          // console.log(stockAlreadyWatchlisted)
+
+                      // let response = await fetch(`/.netlify/functions/get_watchlist?userId=${user.uid}`)
+                      // let listed = await response.json()
+                     // console.log(listed)
+  
 
                                           if (stockAlreadyWatchlisted.exists) {
                                                 // console.log(`${stockAlreadyWatchlisted} appened watchlisted`)
@@ -140,7 +172,7 @@ if (user) {
 
       // Add event listener to the watch-list button
                     document.querySelector('#watchlist-button').addEventListener('click', async function(event) {
-                        event.preventDefault()
+                     event.preventDefault()
                                                       
                       let stockAlreadyWatchlisted =  await db.collection('userwatchlist').doc(`${user.uid}-${nomtick}`).get()
                       console.log(stockAlreadyWatchlisted)   
@@ -151,23 +183,23 @@ if (user) {
 
                                 //Add stock to the user-specific userwatchlist and add HTML accordingly
                                 
-                                let response = await fetch('/.netlify/functions/create_watchlist', {
-                                  method: 'WATCHLIST',
-                                  body: JSON.stringify({
-                                    userId: user.uid, 
-                                    stockSymb: nomtick,
-                                    lastestPrice: precioEOD,
-                                    lastestDate: fechaEOD
-                                  })
-                                })
-                                let watchlistfetched = await response.json()
-
-                                // await db.collection('userwatchlist').doc(`${user.uid}-${nomtick}`).set({
-                                //   userId: user.uid, 
-                                //   stockSymb: nomtick,
-                                //   lastestPrice: precioEOD,
-                                //   lastestDate: fechaEOD
+                                // let response = await fetch('/.netlify/functions/create_watchlist', {
+                                //   method: 'POST',
+                                //   body: JSON.stringify({
+                                //     userId: user.uid, 
+                                //     stockSymb: nomtick,
+                                //     lastestPrice: precioEOD,
+                                //     lastestDate: fechaEOD
+                                //   })
                                 // })
+                                // let watchlistfetched = await response.json()
+
+                                await db.collection('userwatchlist').doc(`${user.uid}-${nomtick}`).set({
+                                  userId: user.uid, 
+                                  stockSymb: nomtick,
+                                  lastestPrice: precioEOD,
+                                  lastestDate: fechaEOD
+                                })
 
                                 
                               document.querySelector('#watchlist-element').insertAdjacentHTML('beforeend', `
@@ -203,88 +235,80 @@ if (user) {
          
                       
 
-    // Add event Listener to Get button
-    let btnCalc = document.querySelector("#calc");
-    btnCalc.addEventListener('click', async function(event) {
-      console.log("getbutton was clicked")
+                       // Add event Listener to Get button
+                      let btnCalc = document.querySelector("#calc");
+                      btnCalc.addEventListener('click', async function(event) {
+                        event.preventDefault()
+                        console.log("getbutton was clicked")
 
-      let inidate = document.querySelector('#dtinidate');
-      let enddate = document.querySelector('#dtenddate');
-      console.log(inidate)
-      console.log(enddate)
-      
-          // Calculations when Get button is clicked
-          if(inidate.value != "" && enddate.value != ""){
-            strIniDate = new Date(inidate.value.toString());
-            strEndDate = new Date(enddate.value.toString());
+                        let inidate = document.querySelector('#dtinidate');
+                        let enddate = document.querySelector('#dtenddate');
+                        console.log(inidate)
+                        console.log(enddate)
+                        
+                            // Calculations when Get button is clicked
+                            if(inidate.value != "" && enddate.value != ""){
+                              strIniDate = new Date(inidate.value.toString());
+                              strEndDate = new Date(enddate.value.toString());
+                              console.log(inidate.value)
 
-            //retrieve historical data from ticker
-            let response = await fetch(`https://api.marketstack.com/v1/eod?access_key=${apiKey}&symbols=${nomtick}&date_from=${inidate.value}&date_to=${enddate.value}`)
-            let json = await response.json();
-            let hdeod = json.data;
-            console.log(hdeod)
-            
-            let min = 99999;
-            let max = 0;
-            let avg_tick = 0.0;
-            let chnge = 0;
-            //loop through array(json string)
-            for(let i=0;i<hdeod.length;i++){
-              //retrieve max close value
-              if(hdeod[i].close>max)
-                max = hdeod[i].close;
-              //retrieve min close value
-              if(hdeod[i].close<min)
-                min = hdeod[i].close;
-              //accumulate close values 
-              avg_tick = avg_tick + hdeod[i].close;
-            }
+                              //retrieve historical data from ticker
+                              let response = await fetch(`https://api.marketstack.com/v1/eod?access_key=${apiKey}&symbols=${nomtick}&date_from=${inidate.value}&date_to=${enddate.value}`)
+                              let json = await response.json();
+                              let hdeod = json.data;
+                              console.log(hdeod)
+                              
+                              let min = 99999;
+                              let max = 0;
+                              let avg_tick = 0.0;
+                              let chnge = 0;
+                              //loop through array(json string)
+                              for(let i=0;i<hdeod.length;i++){
+                                //retrieve max close value
+                                if(hdeod[i].close>max)
+                                  max = hdeod[i].close;
+                                //retrieve min close value
+                                if(hdeod[i].close<min)
+                                  min = hdeod[i].close;
+                                //accumulate close values 
+                                avg_tick = avg_tick + hdeod[i].close;
+                              }
 
-            chnge = (hdeod[hdeod.length-1].close / hdeod[0].close)-1;
-            chnge =  Math.round((chnge*100)*100) / 100;
-            avg_tick = Math.round((avg_tick / hdeod.length) * 100) / 100;
-            
-            console.log(chnge)
 
-            document.querySelector('#avg').innerHTML = "$" + avg_tick;
-            document.querySelector('#perchange').innerHTML = chnge+"%";
-            document.querySelector('#min').innerHTML = "$" + min;
-            document.querySelector('#max').innerHTML = "$" + max;
-          
-            return false;
+                              chnge = (hdeod[hdeod.length-1].close / hdeod[0].close)-1;
+                              chnge =  Math.round((chnge*100)*100) / 100;
+                              avg_tick = Math.round((avg_tick / hdeod.length) * 100) / 100;
+                              
+                              console.log(chnge)
 
-          }else{
-            alert("Please pick a date range");
-            return false;
-          }
+                              document.querySelector('#avg').innerHTML = "$" + avg_tick;
+                              document.querySelector('#perchange').innerHTML = chnge+"%";
+                              document.querySelector('#min').innerHTML = "$" + min;
+                              document.querySelector('#max').innerHTML = "$" + max;
+                            
+                              return false;
 
-        });
+                            }else{
+                              alert("Please pick a date range");
+                              return false;
+                            }
 
-  
-  // Listen for comment form submit and create/render the new post
-    // document.querySelector('form').addEventListener('submit', async function(event) {
-    //   event.preventDefault()
-    //   let commentID = user.displayName
-    //   let postImageUrl = document.querySelector('#image-url').value
-    //   let response = await fetch('/.netlify/functions/create_post', {
-    //     method: 'POST',
-    //     body: JSON.stringify({
-    //       userId: user.uid,
-    //       username: postUsername,
-    //       imageUrl: postImageUrl
-    //     })
-    //   })
-    //   let post = await response.json()
-    //   document.querySelector('#image-url').value = '' // clear the image url field
-    //   renderPost(post)
-    // })
+                          });
 
-    // let response = await fetch('/.netlify/functions/get_posts')
-    // let posts = await response.json()
-    // for (let i=0; i<posts.length; i++) {
-    //   let post = posts[i]
-    //   renderPost(post)
 
+
+  //  // create a new Object to hold the comment's data
+  //  let newComment = {
+  //    postId: postId,
+  //    username: firebase.auth().currentUser.displayName,
+  //    text: newCommentText
+  //  }
+
+  //  // call our back-end lambda using the new comment's data
+  //  await fetch('/.netlify/functions/create_comment', {
+  //    method: 'POST',
+  //    body: JSON.stringify(newComment)
+  //  })
 
 
 
@@ -418,7 +442,8 @@ if (user) {
 
       
 
-      
+
+ 
 
 
 

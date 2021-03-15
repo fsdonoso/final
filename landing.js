@@ -44,36 +44,36 @@ firebase.auth().onAuthStateChanged(async function(user) {
     
 
       //Exchanges API Call
-      let respExchange  = await fetch(`http://api.marketstack.com/v1/exchanges?access_key=${apiKey}`)
-      let jsonExchange  = await respExchange.json()
-      let exchange      = jsonExchange.data
+      //let respExchange  = await fetch(`http://api.marketstack.com/v1/exchanges?access_key=${apiKey}`)
+      //let jsonExchange  = await respExchange.json()
+      //let exchange      = jsonExchange.data
 
 
       //loop through exchanges array
-      for (let i=0; i<exchange.length-1; i++) {
-        let exc_name = exchange[i].name
-        let exc_acrn = exchange[i].acronym
-        let exc_micr = exchange[i].mic
-        let exc_coun = exchange[i].country
-        let stk_curr = exchange[i].currency.code
+      //for (let i=0; i<exchange.length-1; i++) {
+        let exc_name = "NASDAQ Stock Exchange"
+        let exc_acrn = "NASDAQ"
+        let exc_micr = "XNAS"
+        let exc_coun = "USA"
+        let stk_curr = "USD"
 
         //append elements to select control>>>>>>>>                                      identify currency>>>>>     acronym>>>>>>>>            mic>>>>>>>>  Name and Country (as label)       
         document.querySelector('#slExchange').insertAdjacentHTML('beforeend', `<option data-curr="${stk_curr}" data-acro="${exc_acrn}" value="${exc_micr}">${exc_name} - ${exc_coun}</option>`);  
-      }
+      //}
 
       //trigger change event in order to load tickers to its corresponding select control.
       // See: selExchange.addEventListener
       document.querySelector("#slExchange").dispatchEvent(new Event("change"));
 
-      let selExchange = document.querySelector("#slExchange");
+      //let selExchange = "NASDAQ Stock Exchange - USA";
       let selTickers  = document.querySelector("#tickername");
 
           //Event Listener to change Exchange/Market/Country
-          selExchange.addEventListener('change', async function(event) {
+          //selExchange.addEventListener('change', async function(event) {
             document.querySelector('#tickername').innerHTML = ''
             
             //API (Marketstack) requires "mic" value
-            var optionMicr    = this.options[this.selectedIndex].value;
+            let optionMicr    = "XNAS";
             // console.log(optionMicr)
             
             let response = await fetch(`http://api.marketstack.com/v1/tickers?access_key=${apiKey}&exchange=${optionMicr}`)
@@ -126,7 +126,7 @@ firebase.auth().onAuthStateChanged(async function(user) {
       //trigger change event in order to retrieve its corresponding data (latest price, latest price date)
       //See: selTickers.addEventListener
       document.querySelector("#tickername").dispatchEvent(new Event("change"));
-    });
+    //});
 
     selTickers.addEventListener('change', async function(event) {
       document.querySelector('#ticker').innerHTML = "";

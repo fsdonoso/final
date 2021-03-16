@@ -193,14 +193,14 @@ if (user) {
   let response = await fetch('/.netlify/functions/create_like', {
     method: 'POST',
     body: JSON.stringify({
-      likeId: "1 like"
+      likeId: user.uid
     })
   })
   
   let numberLikes1 = numberLikes + 1
 
   // Add # of Likes to Page
-  document.querySelector('#likes').innerHTML = `${numberLikes1} Likes`;
+  document.querySelector('#likes').innerHTML = numberLikes1;
 
 })   
 

@@ -12,7 +12,7 @@ exports.handler = async function(event) {
                               
     let numberLikesDocs = numberLikesQuery.docs // stores all the watchlisted stocks in a variable                   
 
-      for(let i = 0; i < umberLikesDocs.length; i++)  {
+      for(let i = 0; i < numberLikesDocs.length; i++)  {
         let likeId = numberLikesDocs[i].id
 
         // Creating objects to push data from firestore into the array

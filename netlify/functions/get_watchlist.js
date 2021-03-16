@@ -2,7 +2,6 @@
 let firebase = require('./firebase')
 
 exports.handler = async function(event) {
-  console.log("Hello from the backend")
 
   let db = firebase.firestore()  
   
